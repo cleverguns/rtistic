@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
+
 class ProductController extends Controller
 {
 
@@ -47,6 +48,7 @@ class ProductController extends Controller
             ->rawColumns(['action', 'product_thumbnail'])
             ->make(true);
     }
+
 
     public function store(Request $request)
     {
@@ -168,6 +170,31 @@ class ProductController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+//additional
+
+public function addProductFromCustomTemplate(Request $request)
+{
+    // Logic to handle the product addition
+    // Use $request->input('fieldname') to access form fields
+
+    // Example: create a new product
+    $product = Product::create($request->all());
+
+    // Return a response, redirect, or handle as needed
+}
+
+public function uploadImageForTshirt(Request $request)
+{
+    // Logic to handle image uploads for T-shirts
+    // Use $request->file('image') to access the uploaded image file
+
+    // Example: save the uploaded image
+    $image = $request->file('image');
+    // Your image saving logic here...
+
+    // Return a response, redirect, or handle as needed
+}
+
 
 
 }

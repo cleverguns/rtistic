@@ -74,6 +74,20 @@ Route::prefix('admin')->group(function () {
         Route::get('/colors', [ProductController::class, 'colors'])->name('product.colors');
         Route::post('/colors/store', [ProductController::class, 'storeColor'])->name('product.colors.store');
         Route::get('/custom-template', [CustomProductController::class, 'create'])->name('product.custom');
+#for adding backend
+Route::post('/admin/products/add-from-custom-template', 'ProductController@addProductFromCustomTemplate');
+Route::post('/admin/products/add-from-custom-template', [ProductController::class, 'addProductFromCustomTemplate']);
+Route::post('/admin/image-upload-tshirt', [ProductController::class, 'uploadImageForTshirt']);
+
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+
+#end
         Route::post('/store', [ProductController::class, 'store'])->name('product.store');
         Route::post('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
         Route::put('/update', [ProductController::class, 'update'])->name('product.update');
@@ -106,3 +120,21 @@ Route::prefix('users')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::post('/image-upload-tshirt', [MasterController::class, 'imageUploadTshirt'])->name('admin.image.upload.tshirt');
 });
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::get('users/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::post('users/store', [UserController::class, 'store'])->name('admin.users.store');
+    Route::get('users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('users/{id}/update', [UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('users/{id}/delete', [UserController::class, 'destroy'])->name('admin.users.delete');
+});
+
+Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout');
+Route::get('/ship', [UserController::class, 'ship'])->name('ship');
+
+
+//Route::get('/admin/manage/users', [UserController::class, 'index'])->name('admin.users.index');
+//Route::post('/admin/manage/users/store', [UserController::class, 'store'])->name('admin.users.store');

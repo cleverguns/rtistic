@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ImageCustomTshirt;
+use App\Models\Product; // Add the relevant product model
 use Illuminate\Http\Request;
 
 class MasterController extends Controller
@@ -14,7 +15,7 @@ class MasterController extends Controller
 
         $imageCustomTshirt = new ImageCustomTshirt();
         $imageCustomTshirt->image = $imageName;
-        // $imageCustomTshirt->user_upload = Auth::user()->id;
+
         if ($imageCustomTshirt->save()) {
             return json_encode([
                 'status' => 201,
@@ -25,6 +26,22 @@ class MasterController extends Controller
                 'status' => 401,
                 'message' => "Something went wrong!"
             ]);
+        }
+    }
+
+    public function addProduct(Request $request)
+    {
+        // Your product creation logic here
+        $product = new Product();
+        // Set product attributes based on the form data
+        $product->product_name = $request->product_name;
+        $product->product_description = $request->product_description;
+        // Add other product attributes
+
+        if ($product->save()) {
+            return redirect('/admin/products')->with('success', 'Product added successfully');
+        } else {
+            return redirect('/admin/products/create')->with('error', 'Failed to add product');
         }
     }
 }
